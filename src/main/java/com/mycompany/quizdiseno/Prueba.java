@@ -19,7 +19,7 @@ public class Prueba {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        try (Connection conn = DataBaseCong.getConnection()) {
+        try (Connection conn = DatabaseConfig.getConnection()) {
             System.out.println("¡Conexión exitosa!");
         } catch (SQLException e) {
             e.printStackTrace();
