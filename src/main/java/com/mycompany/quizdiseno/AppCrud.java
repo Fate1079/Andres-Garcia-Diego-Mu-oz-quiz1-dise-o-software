@@ -17,37 +17,66 @@ import java.sql.Statement;
 public class AppCrud {
 
     //aaa//
-    public void agregarMoto(Moto id) throws SQLException {
-        String query = "INSERT INTO Moto (nombre) VALUES (?)";
-        try (Connection conn = DatabaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            
-            stmt.executeUpdate();
-        }
+   public void agregarMoto(int id,int marca,String cilindrada,int precio,String color) throws SQLException {
+  String query = "INSERT INTO moto (Marca, Cilindraje, Precio, Color) VALUES (?, ?, ?, ?)";
+    try (Connection conn = DatabaseConfig.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query)) {
+        
+        stmt.setInt(1, marca);
+stmt.setString(2, cilindrada);
+stmt.setInt(3, precio);
+stmt.setString(4, color);
+stmt.executeUpdate();
+        
+   
     }
+}
 
-    public Moto buscarPorId(int id) throws SQLException {
-        String consulta = "SELECT * FROM Moto WHERE id = " + id;
-        try (Connection conexion = DatabaseConfig.getConnection();
-             Statement stmt = conexion.createStatement();
-             ResultSet rs = stmt.executeQuery(consulta)) {
-            
+
+public Moto buscarPorId(int id) throws SQLException {
+    String consulta = "SELECT * FROM Moto WHERE id = ?";
+    
+    try (Connection conexion = DatabaseConfig.getConnection();
+         PreparedStatement stmt = conexion.prepareStatement(consulta)) {
+        
+        stmt.setInt(1, id);
+        try (ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
-                return new Moto(rs.getInt("id"), rs.getInt("placa"),rs.getString("Cilindro"),rs.getInt("Precio"),rs.getString("Color"));
+                return new Moto(rs.getInt("id"), rs.getInt("marca"), rs.getString("Cilindraje"), rs.getInt("Precio"), rs.getString("Color"));
             }
-            return null;
         }
     }
+    return null; 
+}
+
+
+public boolean eliminarPorId(int id) throws SQLException {
+    String consulta = "DELETE FROM Moto WHERE id = ?";
     
-    public Moto eliminarPorId(int id) throws SQLException {
-        String consulta = "DELETE * FROM Moto WHERE id = " + id;
+    try (Connection conexion = DatabaseConfig.getConnection();
+         PreparedStatement stmt = conexion.prepareStatement(consulta)) {
+        
+        stmt.setInt(1, id);
+        int filasAfectadas = stmt.executeUpdate();
+        
+        return filasAfectadas > 0; // Devuelve `true` si eliminó algo
+    }
+}
+
+public boolean editarMoto(int id, int marca, String cilindrada, int precio, String color) throws SQLException {
+        String consulta = "UPDATE moto SET Marca = ?, Cilindraje = ?, Precio = ?, Color = ? WHERE id = ?";
+
         try (Connection conexion = DatabaseConfig.getConnection();
-             Statement stmt = conexion.createStatement();
-             ResultSet rs = stmt.executeQuery(consulta)) {
-            
-            if (rs.next()) {
-                return new Moto(rs.getInt("id"), rs.getInt("placa"),rs.getString("Cilindro"),rs.getInt("Precio"),rs.getString("Color"));
-            }
-            return null;
+             PreparedStatement stmt = conexion.prepareStatement(consulta)) {
+
+            stmt.setInt(1, marca);
+            stmt.setString(2, cilindrada);
+            stmt.setInt(3, precio);
+            stmt.setString(4, color);
+            stmt.setInt(5, id);
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;
         }
     }
 }
