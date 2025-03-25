@@ -11,13 +11,26 @@ import java.sql.SQLException;
  * @author ANDRES FELIPE
  */
 public class Motoservice {
-  private AppCrud MotoRepository = new AppCrud();
-    
-    public Moto obtenerJuguete(int id) throws SQLException {
-        return MotoRepository.buscarPorId(id);
+    private AppCrud motoRepository = new AppCrud(); // Cambio de mayúscula en "MotoRepository"
+
+    public Moto obtenerMoto(int id) throws SQLException {
+        return motoRepository.buscarPorId(id);
+    }
+
+    public void agregarMoto(int id, int marca, String cilindrada, int precio, String color) throws SQLException {
+        Moto moto = new Moto(id, marca, cilindrada, precio, color);
+        motoRepository.agregarMoto(id, marca, cilindrada, precio, color);
     }
     
-    public void agregarJuguete(int id,int marca,String cilidraje,int precio,String color) throws SQLException {
-       MotoRepository.agregarMoto(new Moto( id, marca,cilidraje, precio,color));
+    
+    public boolean eliminar(int id) throws SQLException{
+        return motoRepository.eliminarPorId(id);
+    }
+    
+    public boolean editarMoto(int id, int marca, String cilindrada, int precio, String color) throws SQLException {
+          Moto moto = new Moto(id, marca, cilindrada, precio, color);
+        motoRepository.editarMoto(id, marca, cilindrada, precio, color);
+        return true;
+    
     }
 }
