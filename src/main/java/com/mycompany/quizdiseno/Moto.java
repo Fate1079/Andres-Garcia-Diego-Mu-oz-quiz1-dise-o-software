@@ -10,12 +10,12 @@ package com.mycompany.quizdiseno;
  */
 public class Moto {
     private int id;
-    private String Placa;
+    private int Placa;
     private String Cilindraje;
     private int Precio;
     private String Color;
 
-    public Moto(int id, String Placa, String Cilindraje, int Precio, String Color) {
+    public Moto(int id, int Placa, String Cilindraje, int Precio, String Color) {
         this.id = id;
         this.Placa = Placa;
         this.Cilindraje = Cilindraje;
@@ -31,13 +31,15 @@ public class Moto {
         this.id = id;
     }
 
-    public String getPlaca() {
+    public int getPlaca() {
         return Placa;
     }
 
-    public void setPlaca(String Placa) {
+    public void setPlaca(int Placa) {
         this.Placa = Placa;
     }
+
+    
 
     public String getCilindraje() {
         return Cilindraje;

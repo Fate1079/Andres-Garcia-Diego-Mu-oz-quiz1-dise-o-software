@@ -6,7 +6,9 @@ package com.mycompany.quizdiseno;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -14,35 +16,36 @@ import java.sql.SQLException;
  */
 public class AppCrud {
 
-    public void agregarTarea(String nombre) throws SQLException {
-        String query = "INSERT INTO tareas (nombre) VALUES (?)";
+    //aaa//
+    public void agregarMoto(Moto id) throws SQLException {
+        String query = "INSERT INTO Moto (nombre) VALUES (?)";
         try (Connection conn = DatabaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, nombre);
+            
             stmt.executeUpdate();
         }
     }
 
-    public JugueteDTO buscarPorId(int id) throws SQLException {
-        String consulta = "SELECT * FROM juguete WHERE id = " + id;
+    public Moto buscarPorId(int id) throws SQLException {
+        String consulta = "SELECT * FROM Moto WHERE id = " + id;
         try (Connection conexion = DatabaseConfig.getConnection();
              Statement stmt = conexion.createStatement();
              ResultSet rs = stmt.executeQuery(consulta)) {
             
             if (rs.next()) {
-                return new JugueteDTO(rs.getInt("id"), rs.getString("nombre"));
+                return new Moto(rs.getInt("id"), rs.getInt("placa"),rs.getString("Cilindro"),rs.getInt("Precio"),rs.getString("Color"));
             }
             return null;
         }
     }
     
-    public moto eliminarPorId(int id) throws SQLException {
-        String consulta = "DELETE * FROM moto WHERE id = " + id;
+    public Moto eliminarPorId(int id) throws SQLException {
+        String consulta = "DELETE * FROM Moto WHERE id = " + id;
         try (Connection conexion = DatabaseConfig.getConnection();
              Statement stmt = conexion.createStatement();
              ResultSet rs = stmt.executeQuery(consulta)) {
             
             if (rs.next()) {
-                return new JugueteDTO(rs.getInt("id"), rs.getString("nombre"));
+                return new Moto(rs.getInt("id"), rs.getInt("placa"),rs.getString("Cilindro"),rs.getInt("Precio"),rs.getString("Color"));
             }
             return null;
         }

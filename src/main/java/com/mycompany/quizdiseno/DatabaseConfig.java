@@ -15,7 +15,7 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * @author ANDRES FELIPE
  */
-public class DataBaseCong {
+public class DatabaseConfig {
 
     /**
      * @param args the command line arguments
@@ -29,7 +29,7 @@ public class DataBaseCong {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
     
-    private static boolean register(String username, String password) {
+   public static boolean register(String username, String password) {
         String query = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -48,7 +48,7 @@ public class DataBaseCong {
         }
     }
 
-    private static boolean login(String username, String password) {
+    public static boolean login(String username, String password) {
         String query = "SELECT password FROM users WHERE username = ?";
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
